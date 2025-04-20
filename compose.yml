@@ -1,0 +1,99 @@
+---------------------------------------------
+#qbittorrent
+
+services:
+  qbittorrent-nox:
+    container_name: qbittorrent-nox
+    restart: unless-stopped
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - QBT_EULA=accept
+      - QBT_VERSION=latest
+      - QBT_WEBUI_PORT=8888
+      - TZ=Europe/Warsaw
+    image: qbittorrentofficial/qbittorrent-nox:latest
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 8888:8888/tcp
+    read_only: true
+    stop_grace_period: 30m
+    tmpfs:
+      - /tmp
+    tty: true
+    volumes:
+      - ./config:/config
+      - /mnt/ssd/softinfo/pobrane:/downloads
+
+---------------------------------------------
+#apache2
+
+apt install apache2
+
+---------------------------------------------
+#mailserver
+
+services:
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: mailserver
+    hostname: mail.softinfo.com
+    ports:
+      - 25:25
+      - 465:465
+      - 587:587
+      - 993:993
+    volumes:
+      - ./docker-data/dms/mail-data/:/var/mail/
+      - ./docker-data/dms/mail-state/:/var/mail-state/
+      - ./docker-data/dms/mail-logs/:/var/log/mail/admin
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - /etc/localtime:/etc/localtime:roadmin
+    environment:
+      - ENABLE_RSPAMD=1
+      - ENABLE_CLAMAV=1
+      - ENABLE_FAIL2BAN=1
+    restart: always
+
+---------------------------------------------
+#OMV
+
+wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/preinstall | sudo bash
+
+reboothttps://pecl.php.net/get/imagick-3.8.0RC2.tgz
+
+wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash
+
+---------------------------------------------
+#mailserver
+
+services:
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    hostname: mail.softinfo.com
+
+
+192.168.100.3.4190
+
+
+---------------------------------------------
+#cryptogen
+
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save "" --appendonly no
+    tmpfs:
+      - /data
+    restart: unless-stopped
+
+  app:
+    image: cupcakearmy/cryptgeon:latest
+    depends_on:
+      - redis
+    environment:
+      SIZE_LIMIT: 4 MiB
+    ports:
+      - 81:8000
+    restart: unless-stopped

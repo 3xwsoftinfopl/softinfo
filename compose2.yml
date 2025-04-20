@@ -1,0 +1,244 @@
+services:
+  memcached:
+    image: memcached
+    command:
+      - --conn-limit=1024
+      - --memory-limit=64
+      - --threads=4
+    restart: unless-stopped
+
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./config:/config
+    ports:
+      - 8807:80
+      - 5443:443
+    restart: unless-stopped
+
+  memos:
+    image: neosmemo/memos:latest
+    container_name: memos
+    volumes:
+      - ~/.memos/:/var/opt/memos
+    ports:
+      - 5230:5230
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save "" --appendonly no
+    tmpfs:
+      - /data
+    restart: unless-stopped
+
+  app:
+    image: cupcakearmy/cryptgeon:latest
+    depends_on:
+      - redis
+    environment:
+      SIZE_LIMIT: 4 MiB
+    ports:
+      - 81:8000
+    restart: unless-stopped
+
+  convertx:
+    image: ghcr.io/c4illin/convertx
+    container_name: convertx
+    restart: unless-stopped
+    ports:
+      - 3013:3000
+    environment:
+      - JWT_SECRET=aLjongAndSejcretStrjingUsedToSignThejJSONWebToken1234
+    volumes:
+      - ./data:/app/data
+
+  it-tools:
+    container_name: it-tools
+    restart: unless-stopped
+    ports:
+      - 8082:80
+    image: corentinth/it-tools:latest
+
+  speedtest:
+      restart: unless-stopped
+      container_name: openspeedtest
+      ports:
+        - 3007:3000
+        - 3006:3001
+      image: openspeedtest/latest
+
+  psitransfer:
+    restart: always
+    volumes:
+      - /opt/stacks/psitransfer/data:/data
+    ports:
+      - 3010:3000
+    image: psitrax/psitransfer:latest
+
+  vocechat-server:
+    restart: always
+    ports:
+      - 3009:3000
+    container_name: vocechat-server
+    image: privoce/vocechat-server:latest-arm64
+
+  code-server:
+    image: codercom/code-server:latest
+    container_name: code-server
+    environment:
+      - DOCKER_USER=globus
+      - PASSWORD=tooR785655411Asoftinfo.$
+    volumes:
+      - /opt/stacks/coder:/config
+      - /opt/stacks/coder:/home/coder/workspace
+    ports:
+      - 8088:8080
+    restart: unless-stopped
+
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    volumes:
+      - /mnt/ssd/softinfo/pobrane:/downloads
+
+  web-check:
+    restart: unless-stopped
+    ports:
+      - 3008:3000
+    image: lissy93/web-check:latest
+
+  gimp:
+    image: lscr.io/linuxserver/gimp:latest
+    container_name: gimp
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - /opt/stacks/gimp/config:/config
+    ports:
+      - 3003:3000
+      - 3002:3001
+    restart: unless-stopped
+
+  kdenlive:
+    image: lscr.io/linuxserver/kdenlive:latest
+    container_name: kdenlive
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - /opt/stacks/kdenlive/config:/config
+    ports:
+      - 3005:3000
+      - 3004:3001
+    devices:
+      - /dev/dri:/dev/dri
+    shm_size: 1gb
+    restart: unless-stopped
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    network_mode: host
+    volumes:
+      - /opt/stacks/jellyfin/config:/config
+      - /opt/stacks/jellyfin/cache:/cache
+      - type: bind
+        source: /mnt/ssd/softinfo
+        target: /media
+    restart: unless-stopped
+
+  jfa-go:
+    container_name: jfa-go
+    ports:
+      - 8056:8056
+    volumes:
+      - /opt/stacks/jfa/.config/jfa-go:/data
+      - /opt/stacks/jellyfin/config:/jf
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    image: hrfee/jfa-go:unstable
+
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: https://vault.softinfo.pl
+    volumes:
+      - /opt/stacks/vaultwarden/vw-data:/data
+    ports:
+      - 8808:80
+
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: chromium
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - /opt/stacks/chromium/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    shm_size: 1gb
+    restart: unless-stopped
+
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    network_mode: bridge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - /opt/stacks/homeassistant/data:/config
+    ports:
+      - 8123:8123
+    restart: unless-stopped
+
+  wordpress:
+    image: wordpress
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ohL0tai0noh8Apaal9oovoo4rai8noaz
+      WORDPRESS_DB_PASSWORD: wai3chohceng9phiigh7la8AhwoS4ael
+      WORDPRESS_DB_NAME: ohfeeWoLeFoo2ohchee3woodah5ahjee
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ohfeeWoLeFoo2ohchee3woodah5ahjee
+      MYSQL_USER: ohL0tai0noh8Apaal9oovoo4rai8noaz
+      MYSQL_PASSWORD: wai3chohceng9phiigh7la8AhwoS4ael
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  wordpress:
+  db:
