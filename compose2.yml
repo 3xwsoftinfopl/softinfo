@@ -6,6 +6,23 @@ services:
       - --memory-limit=64
       - --threads=4
     restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save "" --appendonly no
+    tmpfs:
+      - /data
+    restart: unless-stopped
+
+  app:
+    image: cupcakearmy/cryptgeon:latest
+    depends_on:
+      - redis
+    environment:
+      SIZE_LIMIT: 4 MiB
+    ports:
+      - 81:8000
+    restart: unless-stopped
     
   kali-linux:
     image: lscr.io/linuxserver/kali-linux:latest
