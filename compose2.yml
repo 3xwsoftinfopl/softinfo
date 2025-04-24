@@ -6,6 +6,28 @@ services:
       - --memory-limit=64
       - --threads=4
     restart: unless-stopped
+    
+  kali-linux:
+    image: lscr.io/linuxserver/kali-linux:latest
+    container_name: kali-linux
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+      - SUBFOLDER=/
+      - "TITLE=Kali Linux"
+    volumes:
+      - /path/to/data:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3015:3000
+      - 3016:3001
+    devices:
+      - /dev/dri:/dev/dri
+    shm_size: "1gb"
+    restart: unless-stopped
 
   heimdall:
     image: lscr.io/linuxserver/heimdall:latest
