@@ -1,6 +1,3 @@
----------------------------------------------
-#qbittorrent
-
 services:
   qbittorrent-nox:
     container_name: qbittorrent-nox
@@ -26,37 +23,7 @@ services:
       - ./config:/config
       - /mnt/ssd/softinfo/pobrane:/downloads
 
----------------------------------------------
-#apache2
 
-apt install apache2
-
----------------------------------------------
-#mailserver
-
-services:
-  mailserver:
-    image: ghcr.io/docker-mailserver/docker-mailserver:latest
-    container_name: mailserver
-    hostname: mail.softinfo.com
-    ports:
-      - 25:25
-      - 465:465
-      - 587:587
-      - 993:993
-    volumes:
-      - ./docker-data/dms/mail-data/:/var/mail/
-      - ./docker-data/dms/mail-state/:/var/mail-state/
-      - ./docker-data/dms/mail-logs/:/var/log/mail/admin
-      - ./docker-data/dms/config/:/tmp/docker-mailserver/
-      - /etc/localtime:/etc/localtime:roadmin
-    environment:
-      - ENABLE_RSPAMD=1
-      - ENABLE_CLAMAV=1
-      - ENABLE_FAIL2BAN=1
-    restart: always
-
----------------------------------------------
 #OMV
 
 wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/preinstall | sudo bash
@@ -65,16 +32,7 @@ reboothttps://pecl.php.net/get/imagick-3.8.0RC2.tgz
 
 wget -O - https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install | sudo bash
 
----------------------------------------------
-#mailserver
 
-services:
-  mailserver:
-    image: ghcr.io/docker-mailserver/docker-mailserver:latest
-    hostname: mail.softinfo.com
-
-
-192.168.100.3.4190
 
 
 ---------------------------------------------
