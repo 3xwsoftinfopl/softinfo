@@ -11,7 +11,7 @@ services:
     image: redis:7-alpine
     command: redis-server --save "" --appendonly no
     tmpfs:
-      - /data
+      - /opt/stacks/crypto/data
     restart: unless-stopped
 
   app:
