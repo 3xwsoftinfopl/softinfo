@@ -1,5 +1,3 @@
-my first repo ;D
-go ahead ;)
-docker compose all-in-one
+docker compose all-in-one i całe przydatne info do poprawnej konfiguracji
 <br><br>
-<center>SOFTINFO.pl zapraszam</center>
+<center>start.SOFTINFO.pl</center>
