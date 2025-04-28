@@ -1,0 +1,8 @@
+Home Assistant aby działał na zewnętrznym adresie z użyciem proxy:
+
+/opt/stacks/homeassistant/data/configuration.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.x.x
