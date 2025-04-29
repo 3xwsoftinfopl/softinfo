@@ -343,3 +343,20 @@ mitmproxy:
     volumes:
       - ./config:/config
       - /mnt/ssd/softinfo/pobrane:/downloads
+
+services:
+  zoraxy:
+    image: zoraxydocker/zoraxy:latest
+    container_name: zoraxy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 8000:8000
+    volumes:
+      - /path/to/zoraxy/config/:/opt/zoraxy/config/
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime
+    environment:
+      FASTGEOIP: "true"
+      ZEROTIER: "true"
