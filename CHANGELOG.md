@@ -1,3 +1,20 @@
+# v0.0.3 (Wed May 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Added deploy.yml file ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+- Added release.yml file ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+- Added deploy.sh file ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+- Added .autorc file ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+- Added amber.yaml secrets file ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+- Added flask quickstart ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+
+#### Authors: 1
+
+- SOFTINFO ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+
+---
+
 # v0.0.2 (Wed May 14 2025)
 
 #### ⚠️ Pushed to `main`
