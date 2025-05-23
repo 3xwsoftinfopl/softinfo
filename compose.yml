@@ -133,7 +133,7 @@ services:
     container_name: code-server
     environment:
       - DOCKER_USER=globus
-      - PASSWORD=tooR785655411Asoftinfo.$
+      - PASSWORD=
     volumes:
       - /opt/stacks/coder:/config
       - /opt/stacks/coder:/home/coder/workspace
