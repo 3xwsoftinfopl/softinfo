@@ -263,9 +263,9 @@ services:
       - 8080:80
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: ohL0tai0noh8Apaal9oovoo4rai8noaz
-      WORDPRESS_DB_PASSWORD: wai3chohceng9phiigh7la8AhwoS4ael
-      WORDPRESS_DB_NAME: ohfeeWoLeFoo2ohchee3woodah5ahjee
+      WORDPRESS_DB_USER: ohL0taoo4rai8noaz
+      WORDPRESS_DB_PASSWORD: wai3cho7la8AhwoS4ael
+      WORDPRESS_DB_NAME: ohfeeWoLee3woodah5ahjee
     volumes:
       - wordpress:/var/www/html
 
@@ -273,9 +273,9 @@ services:
     image: mysql:latest
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ohfeeWoLeFoo2ohchee3woodah5ahjee
-      MYSQL_USER: ohL0tai0noh8Apaal9oovoo4rai8noaz
-      MYSQL_PASSWORD: wai3chohceng9phiigh7la8AhwoS4ael
+      MYSQL_DATABASE: ohfeeWoh5ahjee
+      MYSQL_USER: ohL0tai0norai8noaz
+      MYSQL_PASSWORD: wai3chohcenAhwoS4ael
       MYSQL_RANDOM_ROOT_PASSWORD: 1
     volumes:
       - db:/var/lib/mysql
@@ -292,7 +292,7 @@ volumes:
       database__client: mysql
       database__connection__host: db
       database__connection__user: root
-      database__connection__password: eit0ceijaithooh4aG4Ieteeth3viemeiy6lee1
+      database__connection__password: 4Ieteeth3viemeiy6lee1
       database__connection__database: ghost
       url: https://blog.softinfo.pl
     volumes:
@@ -302,7 +302,7 @@ volumes:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: eit0ceijaithooh4aG4Ieteeth3viemeiy6lee1
+      MYSQL_ROOT_PASSWORD: 4Ieteeth3viemeiy6lee1
     volumes:
       - db:/var/lib/mysql
 
