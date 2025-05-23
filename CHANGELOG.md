@@ -1,3 +1,15 @@
+# v0.0.5 (Fri May 23 2025)
+
+#### ⚠️ Pushed to `main`
+
+- compose.yml ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+
+#### Authors: 1
+
+- SOFTINFO ([@3xwsoftinfopl](https://github.com/3xwsoftinfopl))
+
+---
+
 # v0.0.4 (Fri May 23 2025)
 
 #### ⚠️ Pushed to `main`
